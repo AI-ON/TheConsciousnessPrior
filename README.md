@@ -2,11 +2,12 @@
 This is the repository for the [AI-ON](https://ai-on.org/) Consciousness Prior project.  
 
 # Related Material
- Below you will find other relevant material to this project. This short list already assumes a familiarity 
+Below you will find other relevant material to this project. This short list already assumes a familiarity 
 with common deep neural networks (RNNs, CNNs) and training procedures (BPTT).
 
+* [Bengio. (2017). The Consciousness Prior](https://arxiv.org/abs/1709.08568)
 * [Dehaene et al. (2017). What is consciousness, and could machines have it?](http://science.sciencemag.org/content/358/6362/486)
-* [Goodfellow et al. (2016). Deep Learning (esp. Ch 15)](http://www.deeplearningbook.org/)
+* [Goodfellow et al. (2016). Deep Learning](http://www.deeplearningbook.org/) Esp. Ch 15.
 * [Bahdanau et al. (2014). Neural Machine Translation by Jointly Learning to Align and
   Translate](https://arxiv.org/abs/1409.0473)
 * [Goodfellow et al. (2014). Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)
@@ -26,4 +27,5 @@ We propose first investigating an extension to the Billiards task introduced in
 
 
 ## Reinforcement Learning
- 
+We may simultaneously investigate the consciousness prior in the context of
+reinforcement learning.   
