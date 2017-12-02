@@ -2,7 +2,7 @@
 * Tagline: Consiousness inspired attentional models in machine learning 
 * Date: December 2017
 * Category: Fundamental Research
-* Contact(s):  William Fedus, Sherji Ozair, Gerry Che, Yoshua Bengio 
+* Contact(s):  [William Fedus](liam.fedus@gmail.com), [Sherjil Ozair](sherjilozair@gmail.com), [Gerry Che](tongcheprivate@gmail.com), [Yoshua Bengio](yoshua.umontreal@gmail.com)
  
 ## Project Status:
 * Initial exploration of consciousness prior in a purely observational setting.
