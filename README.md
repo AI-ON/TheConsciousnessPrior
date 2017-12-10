@@ -43,6 +43,7 @@ with common deep neural networks (RNNs, CNNs) and training procedures (BPTT).
 * [Goodfellow et al. (2014). Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)
 * [Brakel and Bengio. (2017). Learning Independent Features with Adversarial Nets for Non-linear
   ICA](https://arxiv.org/abs/1710.05050)
+* [Jaderberg et al. (2016). Reinforcement Learning with Unsupervised Auxiliary Tasks](https://arxiv.org/pdf/1611.05397.pdf)
 
 ## Contribute:
 To contribute to this project, please familiarize yourself with the Relevant
