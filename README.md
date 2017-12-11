@@ -6,7 +6,9 @@
  
 ## Project Status:
 * Initial exploration of consciousness prior in a purely observational setting.
-* Constructing environments to test efficacy of attention. 
+* Constructing environments to test efficacy of CP in tracking objects,
+  particularly when the task is complicated with high-entropy observations in
+the pixel space. 
 
 ## Community Links:
 * [Google
@@ -46,11 +48,16 @@ with common deep neural networks (RNNs, CNNs) and training procedures (BPTT).
 * [Jaderberg et al. (2016). Reinforcement Learning with Unsupervised Auxiliary Tasks](https://arxiv.org/pdf/1611.05397.pdf)
 
 ## Contribute:
-To contribute to this project, please familiarize yourself with the Relevant
-Work.  Once you are comfortable with this literature, you may create a new
-branch then begin work on an open GitHub issue.  This process is experimental, 
-but we will establish a review process for new code pull requests.  We will 
-seek to establish unit tests as well as performance tests on tasks as new 
+To contribute to this project:
+
+1. Sign up for the [Slack
+   Channel](https://join.slack.com/t/theconsciousnessprior/shared_invite/enQtMjgwMTY4OTczODc2LTdmMDFjM2ViMDk0ZTc5YWRmMDNhZGU4ZTJiMGYzYmYwMTI4NTIyY2RmODYzYjE3MmYwOTNmNGU5NzkwYTM0MDc) and [Google
+   Group](https://groups.google.com/forum/#!forum/the-consciousness-prior).
+2. Please familiarize yourself with the Relevant Work.  
+3. Create a new branch and then begin work on an open GitHub issue. Coordinate
+   with others on Slack so that work is not duplicated unnecessarily.  
+
+The AI-ON process is experimental, but we will establish a review process for new code pull requests.  We will seek to establish unit tests as well as performance tests on tasks as new 
 modules are created. 
 
 ### Observational
@@ -61,5 +68,5 @@ We propose first investigating an extension to the Billiards task introduced in
 
 ### Reinforcement Learning
 We may simultaneously investigate the consciousness prior in the context of
-reinforcement learning.   
-
+reinforcement learning, where the agent is in influencing the sensory input via
+control.   
