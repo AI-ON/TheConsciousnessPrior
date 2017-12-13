@@ -4,7 +4,13 @@ flags = tf.app.flags
 FLAGS = flags.FLAGS
 
 def encoder(image, is_train=True, reuse=False):
-    """Encoder from raw pixels to an embedding."""
+    """Encoder from raw pixels to an embedding.
+    
+    Input:
+
+    Returns:
+
+    """
     # Adopting a simple DCGAN-inspired image encoder.
     num_filters = 32
     
@@ -43,13 +49,48 @@ def encoder(image, is_train=True, reuse=False):
                                     units=FLAGS.representation_dim)
         return embedding
 
+        
+def representation(images, is_train=True):
+    """Representation (R).  This encodes the frame using an encoder and
+    maintains a recurrent computation over the sequence of images to maintain
+    the full (unconscious) representation of the environment.
+    
+    Input:
+        images:  Sequence of images. Shape: [batch_size, time_steps, image_dim,
+        image_dim, channels]
+        is_train:  (default=True) Whether the module is currently training.  
 
-def representation_recurrence(image_encoding):
-    """Recurrent component of representation."""
-    pass
+    Returns:
+        outputs:  Full unconscious representation of the environment.
+    """
+    # Using the same representation dimension for the top level of the encoder
+    # and the RNN.
+    lstm_dim = FLAGS.representation_dim
+    lstm = tf.contrib.rnn.BasicLSTMCell(lstm_dim)
+
+    # Initial state for the representation RNN.
+    initial_state = state = lstm.zero_state(FLAGS.batch_size, dtype=tf.float32) 
+    
+    # Unstack the images.
+    images = tf.unstack(images, axis=1)
+
+    with tf.variable_scope("representation") as rnn_rep:
+        outputs = []
+        # For simplicity, we're considering a statically unrolled RNN.  Dynamic 
+        # RNNs may be considered later, as necessary for the tasks.
+        for i, image in enumerate(images):
+            if i > 0:
+                rnn_rep.reuse_variables()
+            embedding = encoder(image, is_train=is_train)
+
+            # Recurrent computation.
+            output, state = lstm(embedding, state)
+
+            # Append to list. 
+            outputs.append(output)
+        
+        outputs = tf.stack(outputs, axis=1)
+        return outputs
 
 
-def representation(FLAGS):
-    """Representation (R)"""
-    pass    
 
