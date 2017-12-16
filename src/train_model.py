@@ -22,8 +22,10 @@ def create_model():
                                     FLAGS.time_steps,
                                     FLAGS.image_dim,
                                     FLAGS.image_dim, 3])
-    
-    representations = representation(images, is_train=True)
+
+    # Assign RNN type
+    rnn_t = "gru"
+    representations = representation(images, is_train=True, rnn_type=rnn_t)
 
     model = representations
     print(model.get_shape())
