@@ -50,7 +50,7 @@ def encoder(image, is_train=True, reuse=False):
         return embedding
 
         
-def representation(images, is_train=True, rnn_type="lstm"):
+def representation(images, is_train=True):
     """Representation (R).  This encodes the frame using an encoder and
     maintains a recurrent computation over the sequence of images to maintain
     the full (unconscious) representation of the environment.
@@ -68,9 +68,9 @@ def representation(images, is_train=True, rnn_type="lstm"):
     rnn_dim = FLAGS.representation_dim
 
     # Choose RNN based on the type. Right now it's either GRU or LSTM
-    if (rnn_type == "lstm"):
+    if (FLAGS.rnn_type == "lstm"):
         rnn = tf.contrib.rnn.BasicLSTMCell(rnn_dim)
-    elif(rnn_type == "gru"):
+    elif(FLAGS.rnn_type == "gru"):
         rnn = tf.contrib.rnn.GRUCell(rnn_dim)
 
     # Initial state for the representation RNN.

@@ -44,7 +44,7 @@ def create_model():
         FLAGS.image_dim, 1], dtype=tf.float32, name="X")
     
     # Representation RNN.
-    representations = representation(inputs, is_train=True, rnn_type=FLAGS.rnn_type)
+    representations = representation(inputs, is_train=True)
     
     # Model containing the modules.
     model = {'inputs': inputs, 
