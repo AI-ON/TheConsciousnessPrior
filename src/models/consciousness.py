@@ -6,13 +6,19 @@ FLAGS = flags.FLAGS
 
 def integrate_vectors():
     """Integrate noise with representation."""
+    # TODO(liamfedus):  What integration strategy(s) do we wish 
+    # to explore here?  Concatentation, bilinear integration, learned 
+    # non-linear mapping, etc.
     pass
 
 
 def select_conscious_elements(representation, c_rnn_out):
     """Function that produces the selected elements from the representation.""" 
     # TODO(liamfedus):What are principles that we want this attention mechanism
-    # to follow?  
+    # to follow? Use the processing of the conscious state RNN and the current 
+    # representation to create a probability distribution over the unconscious 
+    # elements.  Then sample particular elements.  Training through hard 
+    # attention mechanisms may be done with methods like REBAR, RELAX, etc.
     pass
 
 
@@ -60,8 +66,9 @@ def consciousness(representations, is_train=True):
        
             # Current conscious state should be a (key, value)-tuple.
             # TODO(liamfedus):  Retrieve corresponding elements of the 
-            # representation.
-            # Similar to: conscious_values = tf.gather(rep, b)
+            # representation.  Something like a gather in this simple 
+            # case: B = tf.gather(rep, b) of scalars.  Need to generalize
+            # later.
 
         # TODO(liamfedus):  Return the outputs.
         return 
