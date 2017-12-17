@@ -3,16 +3,16 @@ import tensorflow as tf
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 
+
 def integrate_vectors():
     """Integrate noise with representation."""
     pass
 
 
 def select_conscious_elements(representation, c_rnn_out):
-    """Function that produces the selected elements from the representation. 
-    What are principles that we want this to follow?  Well, the selected
-    elements should depend on the current representation and what the
-    consicousness has been computing.  """
+    """Function that produces the selected elements from the representation.""" 
+    # TODO(liamfedus):What are principles that we want this attention mechanism
+    # to follow?  
     pass
 
 
@@ -30,6 +30,9 @@ def consciousness(representations, is_train=True):
     representations = tf.unstack(represenations, axis=1)
 
     with tf.variable_scope("consciousness") as c_rnn:
+        # As initially diagrammed, the C-module is responsible for producing
+        # the current conscious state as well as predicting future conscious
+        # elements.
         current_elements = []
         future_elements = []
 
@@ -40,6 +43,9 @@ def consciousness(representations, is_train=True):
             # Noise injected at each time-step.
             z_t = tf.random_normal([FLAGS.batch_size, FLAGS.noise_dim],
                     dtype=tf.float32)
+            
+            # Input to C-RNN is a combination of the representation and the
+            # noise.
             rnn_in = integrate_vectors(rep, z_t)    
 
             # Recurrent computation.
@@ -53,8 +59,9 @@ def consciousness(representations, is_train=True):
             future_elements.append(a)
        
             # Current conscious state should be a (key, value)-tuple.
-            # TODO(liamfedus):  Index into the representation.
-            conscious_values = tf.gather(rep, b)
+            # TODO(liamfedus):  Retrieve corresponding elements of the 
+            # representation.
+            # Similar to: conscious_values = tf.gather(rep, b)
 
-        # Combine to list.
-        return sparse_outputs
+        # TODO(liamfedus):  Return the outputs.
+        return 
