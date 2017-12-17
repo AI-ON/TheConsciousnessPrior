@@ -9,7 +9,7 @@ flags.DEFINE_string("model_dir", "/tmp/cp", "Directory for Tensorboard"
                     "summaries and videos.")
 flags.DEFINE_string("env", "Billiards", "Name of environment. One of"
                     " ['Billiards.].")
-flags.DEFINE_string("rnn_type", "lstm", "Choice of RNN")
+flags.DEFINE_string("rnn_type", "lstm", "Choice of RNN. One of ['lstm', 'gru']")
 flags.DEFINE_float('learning_rate', 0.0001, 'Initial learning rate.')
 flags.DEFINE_integer('training_steps', 2000, 'Number of steps to train model.')
 flags.DEFINE_integer('time_steps', 5, 'Number of time steps to unroll model')

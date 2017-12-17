@@ -67,11 +67,13 @@ def representation(images, is_train=True):
     # and the RNN.
     rnn_dim = FLAGS.representation_dim
 
-    # Choose RNN based on the type. Right now it's either GRU or LSTM
+    # Choose RNN based on the type. 
     if (FLAGS.rnn_type == "lstm"):
         rnn = tf.contrib.rnn.BasicLSTMCell(rnn_dim)
     elif(FLAGS.rnn_type == "gru"):
         rnn = tf.contrib.rnn.GRUCell(rnn_dim)
+    else:
+        raise NotImplementedError
 
     # Initial state for the representation RNN.
     initial_state = state = rnn.zero_state(FLAGS.batch_size, dtype=tf.float32) 

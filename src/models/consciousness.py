@@ -27,7 +27,14 @@ def consciousness(representations, is_train=True):
     representations produced by R and produces a sparse conscious state."""
     
     rnn_dim = FLAGS.representation_dim
-    rnn = tf.contrib.rnn.BasicLSTMCell(rnn_dim)
+    
+    # Choose RNN based on the type.
+    if (FLAGS.rnn_type == "lstm"):
+        rnn = tf.contrib.rnn.BasicLSTMCell(rnn_dim)
+    elif(FLAGS.rnn_type == "gru"):
+        rnn = tf.contrib.rnn.GRUCell(rnn_dim)
+    else:
+        raise NotImplementedError
 
     # Initial state for consciousness RNN.
     initial_state = state = rnn.zero_state(FLAGS.batch_size, dtype=tf.float32)
