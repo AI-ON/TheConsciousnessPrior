@@ -52,7 +52,7 @@ with common deep neural networks (RNNs, CNNs) and training procedures (BPTT).
 To contribute to this project:
 
 1. Sign up for the [Slack
-   Channel](https://join.slack.com/t/theconsciousnessprior/shared_invite/enQtMjgwMTY4OTczODc2LTdmMDFjM2ViMDk0ZTc5YWRmMDNhZGU4ZTJiMGYzYmYwMTI4NTIyY2RmODYzYjE3MmYwOTNmNGU5NzkwYTM0MDc) and [Google
+   Channel](https://join.slack.com/t/theconsciousnessprior/shared_invite/enQtMjg5MDg0NDY1NjAyLWRjZTcyY2VjMzFjMWI5YTQ0MmRjY2RmZjc4NTZkMzdmMzc4YWNkYTM3YjgwNTRmNWVkOWNmMmFiYzBhZDUxNzI) and [Google
    Group](https://groups.google.com/forum/#!forum/the-consciousness-prior).
 2. Please familiarize yourself with the Relevant Work.  
 3. Create a new branch and then begin work on an open GitHub issue. Coordinate
