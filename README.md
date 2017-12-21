@@ -2,7 +2,7 @@
 * Tagline: Consiousness inspired attentional models in machine learning 
 * Date: December 2017
 * Category: Fundamental Research
-* Contact(s):  [William Fedus](mailto:liam.fedus@gmail.com), [Sherjil Ozair](mailto:sherjilozair@gmail.com), [Gerry Che](mailto:tongcheprivate@gmail.com), [Yoshua Bengio](mailto:yoshua.umontreal@gmail.com)
+* Contact(s):  [William Fedus](mailto:liam.fedus@gmail.com), [Sherjil Ozair](mailto:sherjilozair@gmail.com), [Yoshua Bengio](mailto:yoshua.umontreal@gmail.com)
  
 ## Project Status:
 * Initial exploration of consciousness prior in a purely observational setting.
@@ -14,7 +14,7 @@ the pixel space.
 * [Google
   Group](https://groups.google.com/forum/#!forum/the-consciousness-prior)
 * [Slack
-  Link](https://join.slack.com/t/theconsciousnessprior/shared_invite/enQtMjgwMTY4OTczODc2LTdmMDFjM2ViMDk0ZTc5YWRmMDNhZGU4ZTJiMGYzYmYwMTI4NTIyY2RmODYzYjE3MmYwOTNmNGU5NzkwYTM0MDc)
+  Link](https://join.slack.com/t/theconsciousnessprior/shared_invite/enQtMjg5MDg0NDY1NjAyLWRjZTcyY2VjMzFjMWI5YTQ0MmRjY2RmZjc4NTZkMzdmMzc4YWNkYTM3YjgwNTRmNWVkOWNmMmFiYzBhZDUxNzI)
 
 ## Problem description:
 See introduction of project proposal.
@@ -46,6 +46,7 @@ with common deep neural networks (RNNs, CNNs) and training procedures (BPTT).
 * [Brakel and Bengio. (2017). Learning Independent Features with Adversarial Nets for Non-linear
   ICA](https://arxiv.org/abs/1710.05050)
 * [Jaderberg et al. (2016). Reinforcement Learning with Unsupervised Auxiliary Tasks](https://arxiv.org/pdf/1611.05397.pdf)
+* [Grathwohl et al. (2017). Backpropagation Through the Void](https://arxiv.org/pdf/1711.00123.pdf)
 
 ## Contribute:
 To contribute to this project:
