@@ -1,6 +1,7 @@
 import tensorflow as tf
 
 from models.representation import *
+from models.consciousness import *
 from environments.billiards import Billiards
 
 flags = tf.app.flags
@@ -13,11 +14,15 @@ flags.DEFINE_string("rnn_type", "lstm", "Choice of RNN. One of ['lstm', 'gru']")
 flags.DEFINE_float('learning_rate', 0.0001, 'Initial learning rate.')
 flags.DEFINE_integer('training_steps', 2000, 'Number of steps to train model.')
 flags.DEFINE_integer('time_steps', 5, 'Number of time steps to unroll model')
-flags.DEFINE_integer('representation_dim', 128, 'Number of units in hidden units in RNN layer.')
+flags.DEFINE_integer('representation_dim', 128, 'Number of units in hidden'
+        'units in RNN layer.')
 flags.DEFINE_integer('image_dim', 128, 'Dimension of the image frames.')
-flags.DEFINE_integer('batch_size', 64, 'Batch size.  '
+flags.DEFINE_integer('noise_dim', 16, 'Dimension of the noise vector.')
+flags.DEFINE_integer('batch_size', 1, 'Batch size.  '
                          'Must divide evenly into the dataset sizes.')
-
+flags.DEFINE_string("vector_integration", "concat", "How to combine the"
+        "representation (h_t) and the noise (z_t) into the Consciousness" 
+        "Module. One of ['concat', 'outer_prod']")
 FLAGS = flags.FLAGS
 
 def create_env():
@@ -45,7 +50,10 @@ def create_model():
     
     # Representation RNN.
     representations = representation(inputs, is_train=True)
-    
+   
+    # Consciousness RNN.
+    # c = consciousness(representations, is_train=True)
+
     # Model containing the modules.
     model = {'inputs': inputs, 
             'R_RNN':  representations, 

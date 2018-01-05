@@ -4,12 +4,26 @@ flags = tf.app.flags
 FLAGS = flags.FLAGS
 
 
-def integrate_vectors():
-    """Integrate noise with representation."""
-    # TODO(liamfedus):  What integration strategy(s) do we wish 
-    # to explore here?  Concatentation, bilinear integration, learned 
-    # non-linear mapping, etc.
-    pass
+def integrate_vectors(rep, z):
+    """Integrate representation (h_t) with the noise (z_t).  Ensure that the
+    output dimension is equal to the consciousness RNN dimension via a learned 
+    linear layer."""
+    if FLAGS.vector_integration == 'concat':
+        combined = tf.concat([rep, z], axis=1)
+        #combined = tf.expand_dims(concat, 0)
+    
+    elif FLAGS.vector_integration == 'outer_prod':
+        outer_prod = tf.einsum('i,j->ij', rep, z)
+        combined =  tf.reshape(outer_prod, shape=[-1])
+        combined = tf.expand_dims(concat, 0)
+
+    else:
+        raise NotImplementedError
+
+    output = tf.contrib.layers.fully_connected(combined,
+             num_outputs=FLAGS.representation_dim,
+             activation_fn=None)
+    return output    
 
 
 def select_conscious_elements(representation, c_rnn_out):
@@ -40,7 +54,7 @@ def consciousness(representations, is_train=True):
     initial_state = state = rnn.zero_state(FLAGS.batch_size, dtype=tf.float32)
 
     # Unstack representations.
-    representations = tf.unstack(represenations, axis=1)
+    representations = tf.unstack(representations, axis=1)
 
     with tf.variable_scope("consciousness") as c_rnn:
         # As initially diagrammed, the C-module is responsible for producing
