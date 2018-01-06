@@ -26,21 +26,55 @@ def integrate_vectors(rep, z):
     return output    
 
 
-def select_conscious_elements(representation, c_rnn_out):
-    """Function that produces the selected elements from the representation.""" 
-    # TODO(liamfedus):What are principles that we want this attention mechanism
-    # to follow? Use the processing of the conscious state RNN and the current 
-    # representation to create a probability distribution over the unconscious 
-    # elements.  Then sample particular elements.  Training through hard 
-    # attention mechanisms may be done with methods like REBAR, RELAX, etc.
-    pass
+def select_conscious_elements(representation, c_rnn_out, is_train):
+    """Function that produces the selected elements from the representation 
+    Select the top-k elements in a sparse and noisy manner.  We employ the tools
+    of Outrageously Large Neural Networks (https://arxiv.org/pdf/1701.06538.pdf)
+    which were used for selecting the top-k experts.
+    https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/utils/expert_utils.py
+    
+    Args:
 
+    Returns:
+
+    """
+    k = FLAGS.num_conscious_elements
+
+    with tf.variable_scope("selection") as sel: 
+        w_gate = tf.get_variable("w_gate", 
+                [FLAGS.representation_dim, FLAGS.consciousness_dim], 
+                tf.float32)
+        w_noise = tf.get_variable("w_noise", 
+                [FLAGS.representation_dim, FLAGS.consciousness_dim], 
+                tf.float32)
+
+        # Selection mechanism. 
+        logits = tf.matmul(representation, w_gate)
+
+        # Add noise to the element selection.
+        noise_eps = 1e-2
+        raw_noise_stddev = tf.matmul(representation, w_noise)
+        noise_stddev = ((tf.nn.softplus(raw_noise_stddev) + noise_eps) *
+                tf.to_float(is_train))
+
+        # Noisy logits.
+        noisy_logits = logits + (tf.random_normal(tf.shape(logits)
+            * noise_stddev) 
+       
+        # Select the top-k elements.
+        top_logits, top_indices = tf.nn.top_k(noisy_logits, k)
+
+        top_k_logits = tf.slice(top_logits, [0, 0], [-1, k])
+        top_k_indices = tf.slice(top_indices, [0, 0], [-1, k])
+        top_k_gates = tf.nn.softmax(top_k_logits)
+
+        return
 
 def consciousness(representations, is_train=True):
     """Consciousness (C) module.  This retrieves elements from the
     representations produced by R and produces a sparse conscious state."""
     
-    rnn_dim = FLAGS.representation_dim
+    rnn_dim = FLAGS.consciousness_dim
     
     # Choose RNN based on the type.
     if (FLAGS.rnn_type == "lstm"):
@@ -63,24 +97,16 @@ def consciousness(representations, is_train=True):
         current_elements = []
         future_elements = []
 
-        for t, rep in enumerate(representations):
+        for t, rnn_in in enumerate(representations):
             if t > 0:
                 c_rnn.reuse_variables()
-        
-            # Noise injected at each time-step.
-            z_t = tf.random_normal([FLAGS.batch_size, FLAGS.noise_dim],
-                    dtype=tf.float32)
-            
-            # Input to C-RNN is a combination of the representation and the
-            # noise.
-            rnn_in = integrate_vectors(rep, z_t)    
 
             # Recurrent computation.
             output, state = rnn(rnn_in, state)
 
-            # TODO(liamfedus): How do we want this computation to select 
-            # particular elements from the representation?
-            (a, b) = select_conscious_elements(output, rep)
+            # Select current conscious elements and conscious elements to
+            # predict.
+            (a, b) = select_conscious_elements(output, rep, is_train)
             
             current_elements.append(b)
             future_elements.append(a)
