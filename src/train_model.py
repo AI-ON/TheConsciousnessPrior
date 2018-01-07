@@ -21,8 +21,8 @@ flags.DEFINE_integer('consciousness_dim', 128, 'Number of units in hidden'
 
 flags.DEFINE_integer('image_dim', 128, 'Dimension of the image frames.')
 flags.DEFINE_integer('noise_dim', 16, 'Dimension of the noise vector.')
-flags.DEFINE_integer('num_conscious_elements', 16, 'Number of conscious
-        elements to extract from the unconscious representation.')
+flags.DEFINE_integer('num_conscious_elements', 16, 'Number of conscious'
+        'elements to extract from the unconscious representation.')
 flags.DEFINE_integer('batch_size', 1, 'Batch size.  '
                          'Must divide evenly into the dataset sizes.')
 flags.DEFINE_string("vector_integration", "concat", "How to combine the"
