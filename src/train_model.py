@@ -57,11 +57,12 @@ def create_model():
     representations = representation(inputs, is_train=True)
    
     # Consciousness RNN.
-    c = consciousness(representations, is_train=True)
+    conscious_states, keys_to_predict = consciousness(representations, is_train=True)
 
     # Model containing the modules.
     model = {'inputs': inputs, 
-            'R_RNN':  representations, 
+            'R_RNN':  representations,
+            'C_RNN':  conscious_states,
             'global_step': global_step}
     print(model['R_RNN'].get_shape())
     return model
@@ -86,7 +87,11 @@ def create_graph():
     
 def train_model(frames, model):
     """Train the model."""
-    pass    
+    consciousness_prior = create_graph()
+    
+    with tf.Session() as sess:
+        init_op = tf.global_variables_initializer()
+        sess.run(init_op)
 
 
 if __name__=="__main__":

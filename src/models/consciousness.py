@@ -28,10 +28,30 @@ def integrate_vectors(rep, z):
 
 
 def generate_keys_to_predict(conscious_state):
-    # TODO(liamfedus): Generate which future keys to predict. As an initial
-    # model, we might generate future keys based on the current conscious
-    # state.
-    return
+    """Generate the keys of future conscious states to predict.  As an initial
+    implementation, we will generate the keys from the current conscious state.
+    
+    Args:
+        conscious_state:  Current conscious state.
+            
+    Returns:
+        keys_to_predict: Keys to predict.
+    """
+    # Assume that we predict the same number of conscious elements.
+    k = FLAGS.num_conscious_elements    
+    con_dim = FLAGS.consciousness_dim
+
+    with tf.variable_scope("pred_keys") as pred_keys:
+        w_pred = tf.get_variable("w_pred",
+                                 [con_dim, con_dim],
+                                 tf.float32)
+
+        # Generate 
+        logits = tf.matmul(conscious_state, w_pred)
+
+        # Extract the indices to predict.
+        _, keys_to_predict = tf.nn.top_k(logits, k)
+        return keys_to_predict
 
 
 def select_conscious_elements(representation, is_train, noise_epsilon=1e-2):
@@ -109,7 +129,7 @@ def consciousness(representations, is_train=True):
         # As initially diagrammed, the C-module is responsible for producing
         # the current conscious state as well as predicting future conscious
         # elements.
-        current_elements = []
+        conscious_states = []
         future_elements = []
 
         for t, rnn_in in enumerate(representations):
@@ -123,10 +143,9 @@ def consciousness(representations, is_train=True):
             # predict (A).
             (conscious_state, to_predict_keys) = select_conscious_elements(output, is_train)
             
-            current_elements.append(conscious_state)
+            conscious_states.append(conscious_state)
             future_elements.append(to_predict_keys)
       
-        # current_elements = tf.stack(current_elements, axis=1)
-        # future_elements = tf.stack(future_elements, axis=1)
-        # return current_elements, future_elements
-        return
+        conscious_states = tf.stack(conscious_states, axis=1)
+        future_elements = tf.stack(future_elements, axis=1)
+        return conscious_states, future_elements
