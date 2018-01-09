@@ -1,7 +1,8 @@
 import tensorflow as tf
 
-from models.representation import *
-from models.consciousness import *
+from models.representation import representation as R_RNN
+from models.consciousness import consciousness as C_RNN
+from models.generator import generator as G_RNN
 from environments.billiards import Billiards
 
 flags = tf.app.flags
@@ -18,7 +19,6 @@ flags.DEFINE_integer('representation_dim', 128, 'Number of units in hidden'
         'units in RNN layer.')
 flags.DEFINE_integer('consciousness_dim', 128, 'Number of units in hidden'
         'units in consciousness RNN layer.')
-
 flags.DEFINE_integer('image_dim', 128, 'Dimension of the image frames.')
 flags.DEFINE_integer('noise_dim', 16, 'Dimension of the noise vector.')
 flags.DEFINE_integer('num_conscious_elements', 16, 'Number of conscious'
@@ -44,7 +44,7 @@ def generate_frames(env):
     return frames    
 
 
-def create_model():
+def create_model(is_train):
     """Create the model."""
     # Global step.
     global_step = tf.Variable(0, name="global_step", trainable=False)
@@ -54,17 +54,23 @@ def create_model():
         FLAGS.image_dim, 1], dtype=tf.float32, name="X")
     
     # Representation RNN.
-    representations = representation(inputs, is_train=True)
+    representations = R_RNN(inputs, is_train=is_train)
    
     # Consciousness RNN.
-    conscious_states, keys_to_predict = consciousness(representations, is_train=True)
+    conscious_states, keys_to_predict = C_RNN(representations,
+            is_train=is_train)
 
+    # Generator RNN produces predicted conscious states.
+    predicted_conscious_states = G_RNN(conscious_states, keys_to_predict,
+            is_train=is_train)
+    
     # Model containing the modules.
     model = {'inputs': inputs, 
-            'R_RNN':  representations,
-            'C_RNN':  conscious_states,
+            'representations':  representations,
+            'conscious_states':  conscious_states,
+            'predicted_conscious_states': predicted_conscious_states,
             'global_step': global_step}
-    print(model['R_RNN'].get_shape())
+    print(model['representations'].get_shape())
     return model
 
 
@@ -78,15 +84,16 @@ def create_optimizer(loss):
     pass
 
 
-def create_graph():
+def create_graph(is_train):
     """Create computational graph."""
-    model = create_model()
+    model = create_model(is_train=is_train)
     loss = create_loss(model)
     optimizer = create_optimizer(loss)
 
     
 def train_model(frames, model):
     """Train the model."""
+    is_train = True
     consciousness_prior = create_graph()
     
     with tf.Session() as sess:
@@ -97,5 +104,5 @@ def train_model(frames, model):
 if __name__=="__main__":
     env = create_env() 
     frames = generate_frames(env)
-    create_graph()
+    create_graph(is_train=True)
 
