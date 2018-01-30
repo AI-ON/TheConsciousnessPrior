@@ -40,7 +40,8 @@ class Billiards(object):
 
         self.X = np.zeros((self.T, self.n, 2), dtype=np.float)
         self.v = np.random.randn(self.n, 2)
-        self.v /= self.norm(self.v)*0.5
+        self.vnorm = self.norm(self.v)
+        self.v /= self.vnorm*0.5
 
         self.x = self.config()
 
